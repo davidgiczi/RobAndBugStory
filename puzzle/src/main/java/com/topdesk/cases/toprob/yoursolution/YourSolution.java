@@ -12,7 +12,7 @@ public class YourSolution implements Solution {
 
 	private Coordinate actualPositionOfRob;
 	private List<Coordinate> routeCoordinates;
-	private List<Coordinate> fromRoomToKitchenCoords;
+	private List<Coordinate> fromRoomToKitchenRouteCoordinates;
 	private List<Coordinate> neighboursCoordinates;
 	private List<Instruction> instructions;
 	private Grid grid;
@@ -41,12 +41,11 @@ public class YourSolution implements Solution {
 		init();
 		int ellapsedSec = goFromRoomToKitchen(grid, time);
 		List<Instruction> instructions = parseRouteCoordinatesToInstructions(grid);
-		fromRoomToKitchenCoords = new ArrayList<>(routeCoordinates);
+		fromRoomToKitchenRouteCoordinates = new ArrayList<>(routeCoordinates);
 		init();
 		goFromKitchenToRoom(grid, ellapsedSec);
 		instructions.addAll(parseRouteCoordinatesToInstructions(grid));
-		
-		
+			
 		return instructions;
 	}
 
@@ -132,10 +131,14 @@ public class YourSolution implements Solution {
 			throws RobCannotBeSteppedException {
 
 		if (neighboursCoordinates.isEmpty()) {
-			List<Coordinate> fromKitchenToRoomCoords = new ArrayList<>(routeCoordinates);
-			routeCoordinates.clear();
-			routeCoordinates.addAll(fromRoomToKitchenCoords);
-			routeCoordinates.addAll(fromKitchenToRoomCoords);
+			
+			if(fromRoomToKitchenRouteCoordinates != null) {
+				
+				List<Coordinate> fromKitchenToRoomRouteCoordinates = new ArrayList<>(routeCoordinates);
+				routeCoordinates.clear();
+				routeCoordinates.addAll(fromRoomToKitchenRouteCoordinates);
+				routeCoordinates.addAll(fromKitchenToRoomRouteCoordinates);
+			}
 			instructions = parseRouteCoordinatesToInstructions(this.grid);
 			throw new RobCannotBeSteppedException("Rob elakadt a(z) " + actualPositionOfRob + " cellában.");
 
