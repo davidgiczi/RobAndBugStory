@@ -34,7 +34,7 @@ public class StepListener implements ActionListener {
 		stepBug();
 		stepRob();
 		board.setTitle(board.getBoardName(), actualPositionOfRob, ++sec);
-		if (sec == instructions.size()) {
+		if (instructions.isEmpty() || sec == instructions.size()) {
 			board.getTimer().stop();
 			if (isStucking) {
 				JOptionPane.showMessageDialog(board.getFrame(), stuckingMessage);
@@ -72,6 +72,7 @@ public class StepListener implements ActionListener {
 		mySolution.setGrid(GridStore.GRID);
 		try {
 			instructions = mySolution.solve(GridStore.GRID, 0);
+			
 		} catch (RobCannotBeSteppedException e) {
 			instructions = mySolution.getInstructions();
 			stuckingMessage = e.getMessage();
@@ -91,19 +92,22 @@ public class StepListener implements ActionListener {
 
 		Coordinate nextRobPosition = actualPositionOfRob;
 
-		if (instructions.get(sec) == Instruction.EAST) {
-			nextRobPosition = Instruction.EAST.execute(nextRobPosition);
-		} else if (instructions.get(sec) == Instruction.SOUTH) {
-			nextRobPosition = Instruction.SOUTH.execute(nextRobPosition);
-		} else if (instructions.get(sec) == Instruction.WEST) {
-			nextRobPosition = Instruction.WEST.execute(nextRobPosition);
-		} else if (instructions.get(sec) == Instruction.NORTH) {
-			nextRobPosition = Instruction.NORTH.execute(nextRobPosition);
-		} else if (instructions.get(sec) == Instruction.PAUSE) {
-			nextRobPosition = Instruction.PAUSE.execute(nextRobPosition);
-		}
+		if (!instructions.isEmpty()) {
 
-		actualPositionOfRob = nextRobPosition;
+			if (instructions.get(sec) == Instruction.EAST) {
+				nextRobPosition = Instruction.EAST.execute(nextRobPosition);
+			} else if (instructions.get(sec) == Instruction.SOUTH) {
+				nextRobPosition = Instruction.SOUTH.execute(nextRobPosition);
+			} else if (instructions.get(sec) == Instruction.WEST) {
+				nextRobPosition = Instruction.WEST.execute(nextRobPosition);
+			} else if (instructions.get(sec) == Instruction.NORTH) {
+				nextRobPosition = Instruction.NORTH.execute(nextRobPosition);
+			} else if (instructions.get(sec) == Instruction.PAUSE) {
+				nextRobPosition = Instruction.PAUSE.execute(nextRobPosition);
+			}
+
+			actualPositionOfRob = nextRobPosition;
+		}
 
 		return nextRobPosition.getY() * GridStore.GRID.getWidth() + nextRobPosition.getX();
 	}
