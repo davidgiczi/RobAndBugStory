@@ -12,6 +12,7 @@ public class YourSolution implements Solution {
 
 	private Coordinate actualPositionOfRob;
 	private List<Coordinate> routeCoordinates;
+	private List<Coordinate> fromRoomToKitchenCoords;
 	private List<Coordinate> neighboursCoordinates;
 	private List<Instruction> instructions;
 	private Grid grid;
@@ -40,10 +41,12 @@ public class YourSolution implements Solution {
 		init();
 		int ellapsedSec = goFromRoomToKitchen(grid, time);
 		List<Instruction> instructions = parseRouteCoordinatesToInstructions(grid);
+		fromRoomToKitchenCoords = new ArrayList<>(routeCoordinates);
 		init();
 		goFromKitchenToRoom(grid, ellapsedSec);
 		instructions.addAll(parseRouteCoordinatesToInstructions(grid));
-
+		
+		
 		return instructions;
 	}
 
@@ -129,10 +132,13 @@ public class YourSolution implements Solution {
 			throws RobCannotBeSteppedException {
 
 		if (neighboursCoordinates.isEmpty()) {
-	
+			List<Coordinate> fromKitchenToRoomCoords = new ArrayList<>(routeCoordinates);
+			routeCoordinates.clear();
+			routeCoordinates.addAll(fromRoomToKitchenCoords);
+			routeCoordinates.addAll(fromKitchenToRoomCoords);
 			instructions = parseRouteCoordinatesToInstructions(this.grid);
 			throw new RobCannotBeSteppedException("Rob elakadt a(z) " + actualPositionOfRob + " cellában.");
-			
+
 		} else if (neighboursCoordinates.size() == 1) {
 			return neighboursCoordinates.get(0);
 		} else if (neighboursCoordinates.contains(targetCell)) {
