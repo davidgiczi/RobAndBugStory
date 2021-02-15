@@ -156,7 +156,7 @@ public class YourSolution implements Solution {
 
 			int distance = Math.abs(targetCell.getX() - coord.getX()) + Math.abs(targetCell.getY() - coord.getY());
 
-			if (minDistance > distance) {
+			if (minDistance >= distance) {
 				minDistance = distance;
 				theClosest = coord;
 			}
