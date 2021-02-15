@@ -1,7 +1,5 @@
 package com.topdesk.cases.toprob.controller;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -38,23 +36,14 @@ public class EditBoardListener implements ActionListener {
 
 	private void clearImageIcons() {
 
-		boolean isRob = false;
 		for (JButton cell : board.getCells()) {
-
-			if (cell.getText().equals("r")) {
-				isRob = true;
-			}
 
 			if (cell.getIcon() != null) {
 				cell.setIcon(null);
-				if (!isRob) {
-					cell.setFont(new Font("Book Antiqua", Font.BOLD, 30));
-					cell.setForeground(Color.BLUE);
-					cell.setText("r");
-					isRob = true;
+				cell.setText(" ");
 				}
 			}
 		}
-	}
+	
 
 }
