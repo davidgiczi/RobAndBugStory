@@ -41,6 +41,9 @@ public class StepListener implements ActionListener {
 				board.getStartStop().setEnabled(false);
 			} else {
 				JOptionPane.showMessageDialog(board.getFrame(), "Rob " + sec + " sec alatt visszatért a szobájába.");
+				board.getStep().setEnabled(true);
+				board.getEdit().setEnabled(true);
+				board.getDelete().setEnabled(true);
 			}
 			sec = 0;
 		}
