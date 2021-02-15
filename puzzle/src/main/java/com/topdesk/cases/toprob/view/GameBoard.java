@@ -128,6 +128,10 @@ public class GameBoard {
 	public JMenuItem getStep() {
 		return step;
 	}
+	
+	public JMenuItem getDelete() {
+		return delete;
+	}
 
 	public String getBoardName() {
 		return boardName;
@@ -212,10 +216,14 @@ public void addListenerForMenu() {
 				if(timer.isRunning()) {
 					timer.stop();
 					step.setEnabled(true);
+					edit.setEnabled(true);
+					delete.setEnabled(true);
 				}
 				else {
 					timer.start();
 					step.setEnabled(false);
+					edit.setEnabled(false);
+					delete.setEnabled(false);
 				}
 				
 			}
